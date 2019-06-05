@@ -70,18 +70,30 @@ def display_left_to_get():
     messagebox.showinfo("Left to get", '$' + str(total.__round__(2)))
 
 
-def main():
+def launch_gui():
     root = tkinter.Tk()
+    root.title("AMP KiwiSaver helper")
     big_frame = ttk.Frame(root)
     big_frame.pack(fill='both', expand=True)
 
-    # label = ttk.Label(big_frame, text="Copy and paste the contents of the report PDF below:")
-    label = ttk.Label(big_frame, text="")
+    label = ttk.Label(big_frame, text="Copy and paste the contents of the report PDF below:")
     label.pack()
-    ttk.Button(root, text="Show left to get", command=display_left_to_get).pack()
-    label.pack()
-    ttk.Button(root, text="Save CSV", command=save_csv).pack()
+
+    entry = ttk.Entry(big_frame)
+    entry.pack( expand=1, fill=tkinter.BOTH)
+
+    show_left_to_get_button = ttk.Button(big_frame, text="Show left to get", command=display_left_to_get)
+    save_button = ttk.Button(big_frame, text="Save CSV", command=save_csv)
+
+    show_left_to_get_button.pack(in_=big_frame, side='left', expand=1, fill=tkinter.X)
+    save_button.pack(in_=big_frame, side='left', expand=1, fill=tkinter.X)
+
+    root.geometry('300x150')
     root.mainloop()
+
+
+def main():
+    launch_gui()
 
 
 if __name__ == '__main__':
