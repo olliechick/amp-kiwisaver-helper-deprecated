@@ -4,6 +4,7 @@ from tkinter import ttk, messagebox
 
 ENCODING = 'utf-8'
 MAXIMUM_NECESSARY_PAYMENT = 1042.86
+LEFT_TO_GET_TEMPLATE = "Left to get: $"
 
 
 def write_to_file(filename, content, mode='w+'):
@@ -66,9 +67,6 @@ class ProcessReport:
     def save_csv(self):
         write_to_file('output.csv', self.csv_contents)
 
-    def display_left_to_get(self):
-        messagebox.showinfo("Left to get", '$' + str(self.left_to_get.__round__(2)))
-
     def launch_gui(self):
         root = tkinter.Tk()
         root.title("AMP KiwiSaver helper")
@@ -81,9 +79,9 @@ class ProcessReport:
         # Text box
 
         def textbox_updated(*args):
-            # check the text
             textbox_contents = textbox.get(1.0, tkinter.END)
             self.csv_contents, self.left_to_get = process_data(textbox_contents)
+            left_to_get_label.config(text=LEFT_TO_GET_TEMPLATE + str('{:,.2f}'.format(self.left_to_get)))
 
         text_frame = ttk.Frame(big_frame)
         text_frame.pack(fill='both', expand=True)
@@ -100,7 +98,7 @@ class ProcessReport:
 
         # Bottom bar
 
-        left_to_get_label = ttk.Label(big_frame, text="Left to get: $" + str(MAXIMUM_NECESSARY_PAYMENT))
+        left_to_get_label = ttk.Label(big_frame, text=LEFT_TO_GET_TEMPLATE + str(MAXIMUM_NECESSARY_PAYMENT))
         save_button = ttk.Button(big_frame, text="Save CSV", command=self.save_csv)
 
         left_to_get_label.pack(in_=big_frame, side=tkinter.LEFT, expand=1, fill=tkinter.X)
