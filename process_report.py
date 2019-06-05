@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+import tkinter
+from tkinter import ttk, messagebox
 
 ENCODING = 'utf-8'
 MAXIMUM_NECESSARY_PAYMENT = 1042.86
@@ -58,10 +60,28 @@ def process_data(input_filename):
     return output_csv, left_to_give
 
 
-def main():
+def save_csv():
     output_csv, total = process_data('input.txt')
     write_to_file('output.csv', output_csv)
-    print('$' + str(total.__round__(2)))
+
+
+def display_left_to_get():
+    output_csv, total = process_data('input.txt')
+    messagebox.showinfo("Left to get", '$' + str(total.__round__(2)))
+
+
+def main():
+    root = tkinter.Tk()
+    big_frame = ttk.Frame(root)
+    big_frame.pack(fill='both', expand=True)
+
+    # label = ttk.Label(big_frame, text="Copy and paste the contents of the report PDF below:")
+    label = ttk.Label(big_frame, text="")
+    label.pack()
+    ttk.Button(root, text="Show left to get", command=display_left_to_get).pack()
+    label.pack()
+    ttk.Button(root, text="Save CSV", command=save_csv).pack()
+    root.mainloop()
 
 
 if __name__ == '__main__':
