@@ -1,21 +1,10 @@
 #!/usr/bin/env python3
 import tkinter
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, filedialog
 
 ENCODING = 'utf-8'
 MAXIMUM_NECESSARY_PAYMENT = 1042.86
 LEFT_TO_GET_TEMPLATE = "Left to get: $"
-
-
-def write_to_file(filename, content, mode='w+'):
-    """saves the string content to filename."""
-    f = open(filename, mode)
-    f.write(content)
-    f.close()
-
-
-def append_to_file(filename, content):
-    write_to_file(filename, content, 'a')
 
 
 def read_file(filename):
@@ -59,7 +48,13 @@ class ProcessReport:
 
     def save_csv(self):
         try:
-            write_to_file('output.csv', self.csv_contents)
+            f = filedialog.asksaveasfile(mode='w', defaultextension=".csv",
+                                         filetypes=(("CSV file", "*.csv"), ("All Files", "*.*")))
+            if f is None:  # asksaveasfile return `None` if dialog closed with "cancel".
+                return
+            text2save = self.csv_contents
+            f.write(text2save)
+            f.close()
         except PermissionError:
             messagebox.showerror("Error",
                                  "Unable to save output.csv. Maybe you have it open? If so, close it, then try again.")
