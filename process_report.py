@@ -9,14 +9,7 @@ LEFT_TO_GET_TEMPLATE = "Left to get: $"
 
 def write_to_file(filename, content, mode='w+'):
     """saves the string content to filename."""
-    is_open = False
-    while not is_open:
-        try:
-            f = open(filename, mode)
-            is_open = True
-        except PermissionError:
-            input(
-                "Permission error when opening " + filename + ". Let me open it (e.g. by closing it elsewhere) and press enter...")
+    f = open(filename, mode)
     f.write(content)
     f.close()
 
@@ -65,7 +58,11 @@ class ProcessReport:
     left_to_get = MAXIMUM_NECESSARY_PAYMENT
 
     def save_csv(self):
-        write_to_file('output.csv', self.csv_contents)
+        try:
+            write_to_file('output.csv', self.csv_contents)
+        except PermissionError:
+            messagebox.showerror("Error",
+                                 "Unable to save output.csv. Maybe you have it open? If so, close it, then try again.")
 
     def launch_gui(self):
         root = tkinter.Tk()
@@ -86,7 +83,6 @@ class ProcessReport:
         text_frame = ttk.Frame(big_frame)
         text_frame.pack(fill='both', expand=True)
 
-        report_text = tkinter.StringVar()
         textbox = tkinter.Text(text_frame)
         scrollbar = ttk.Scrollbar(text_frame)
 
