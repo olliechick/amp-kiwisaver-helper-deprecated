@@ -98,12 +98,12 @@ class ProcessReport:
         textbox.config(yscrollcommand=scrollbar.set)
         textbox.bind('<KeyRelease>', textbox_updated)
 
-        # Buttons
+        # Bottom bar
 
-        show_left_to_get_button = ttk.Button(big_frame, text="Show left to get", command=self.display_left_to_get)
+        left_to_get_label = ttk.Label(big_frame, text="Left to get: $" + str(MAXIMUM_NECESSARY_PAYMENT))
         save_button = ttk.Button(big_frame, text="Save CSV", command=self.save_csv)
 
-        show_left_to_get_button.pack(in_=big_frame, side=tkinter.LEFT, expand=1, fill=tkinter.X)
+        left_to_get_label.pack(in_=big_frame, side=tkinter.LEFT, expand=1, fill=tkinter.X)
         save_button.pack(in_=big_frame, side=tkinter.LEFT, expand=1, fill=tkinter.X)
 
         # Set up
