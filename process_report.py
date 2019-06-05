@@ -79,8 +79,8 @@ def launch_gui():
     label = ttk.Label(big_frame, text="Copy and paste the contents of the report PDF below:")
     label.pack()
 
-    entry = ttk.Entry(big_frame)
-    entry.pack( expand=1, fill=tkinter.BOTH)
+    entry = tkinter.Text(big_frame)
+    entry.pack(expand=1, fill=tkinter.BOTH)
 
     show_left_to_get_button = ttk.Button(big_frame, text="Show left to get", command=display_left_to_get)
     save_button = ttk.Button(big_frame, text="Save CSV", command=save_csv)
@@ -88,7 +88,7 @@ def launch_gui():
     show_left_to_get_button.pack(in_=big_frame, side='left', expand=1, fill=tkinter.X)
     save_button.pack(in_=big_frame, side='left', expand=1, fill=tkinter.X)
 
-    root.geometry('300x150')
+    root.geometry('300x500')
     root.mainloop()
 
 
