@@ -106,7 +106,7 @@ class ProcessReport:
 
         # Set up
 
-        root.geometry('300x500')
+        root.geometry('900x500')
         root.mainloop()
 
 
