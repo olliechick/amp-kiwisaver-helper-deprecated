@@ -98,6 +98,7 @@ class ProcessReport:
         # Set up
 
         root.geometry('900x500')
+        root.iconbitmap('favicon.ico')
         root.mainloop()
 
 
