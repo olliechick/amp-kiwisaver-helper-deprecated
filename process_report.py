@@ -71,6 +71,7 @@ class ProcessReport:
         self.accounts_list.append(self.new_account_name.get())
         listbox.insert(tkinter.END, self.new_account_name.get())
         self.update_calculation()
+        self.new_account_name.set('')
 
 
     def open_valid_accounts_gui(self):
