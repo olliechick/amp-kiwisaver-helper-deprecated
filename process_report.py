@@ -74,12 +74,11 @@ class ProcessReport:
         big_frame = ttk.Frame(root)
         big_frame.pack(fill='both', expand=True)
 
-        listbox = FancyListboxFrame(big_frame).listbox
+        listbox_frame = FancyListboxFrame(big_frame)
+        listbox = listbox_frame.listbox
         listbox.pack()
 
-        listbox.insert(tkinter.END, "a list entry")
-
-        for item in ["one", "two", "three", "four", "four", "four", "four", "four", "four"]:
+        for item in self.accounts_list:
             listbox.insert(tkinter.END, item)
 
         root.mainloop()
