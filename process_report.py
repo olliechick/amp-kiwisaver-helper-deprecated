@@ -59,11 +59,24 @@ class ProcessReport:
             messagebox.showerror("Error",
                                  "Unable to save output.csv. Maybe you have it open? If so, close it, then try again.")
 
+    def open_valid_accounts_gui(self):
+        messagebox.showinfo("Information", "Not yet implemented")
+
+    def open_help(self):
+        messagebox.showinfo("Information", "Not yet implemented")
+
     def launch_gui(self):
         root = tkinter.Tk()
         root.title("AMP KiwiSaver helper")
         big_frame = ttk.Frame(root)
         big_frame.pack(fill='both', expand=True)
+
+        menu = tkinter.Menu(root)
+        root.config(menu=menu)
+        file_menu = tkinter.Menu(menu, tearoff=False)
+        menu.add_cascade(label="File", menu=file_menu)
+        file_menu.add_command(label="Set valid accounts", command=self.open_valid_accounts_gui)
+        file_menu.add_command(label="Help", command=self.open_help)
 
         label = ttk.Label(big_frame, text="Copy and paste the contents of the report PDF below:")
         label.pack()
@@ -76,7 +89,7 @@ class ProcessReport:
             left_to_get_label.config(text=LEFT_TO_GET_TEMPLATE + str('{:,.2f}'.format(self.left_to_get)))
 
         text_frame = ttk.Frame(big_frame)
-        text_frame.pack(fill='both', expand=True)
+        text_frame.pack(fill=tkinter.BOTH, expand=True)
 
         textbox = tkinter.Text(text_frame)
         scrollbar = ttk.Scrollbar(text_frame)
