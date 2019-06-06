@@ -5,7 +5,7 @@ import markdown, tkinterhtml
 
 ENCODING = 'utf-8'
 MAXIMUM_NECESSARY_PAYMENT = 1042.86
-LEFT_TO_GET_TEMPLATE = "Left to get: $"
+LEFT_TO_GET_TEMPLATE = "Left to contribute: $"
 
 
 def read_file(filename):
@@ -47,7 +47,7 @@ def process_data(file_contents):
 
 def open_about():
     root = tkinter.Tk()
-    root.title("Test")
+    root.title("About")
     html = markdown.markdown(read_file('README.md'))
     html_frame = tkinterhtml.HtmlFrame(root)
     html_frame.pack()

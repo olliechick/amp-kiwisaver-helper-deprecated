@@ -25,8 +25,8 @@ I created this Python GUI tool that does this for you, based on the text in the 
 
 2. Open the report PDF, select all (Ctrl+A), then copy it and paste it into this app.
 
-3. That's it! You will now see how much you still need to contribute, and you can export the contributions that count
-to a CSV.
+3. That's it! You will now see how much you still need to contribute (in the bottom left),
+and you can export the contributions that count to a CSV.
 
 ## Notes
 
