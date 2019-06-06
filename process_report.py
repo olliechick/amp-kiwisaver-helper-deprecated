@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import tkinter
 from tkinter import ttk, messagebox, filedialog
+import markdown, tkinterhtml
 
 ENCODING = 'utf-8'
 MAXIMUM_NECESSARY_PAYMENT = 1042.86
@@ -42,6 +43,18 @@ def process_data(file_contents):
     return output_csv, left_to_give
 
 
+def open_about():
+    root = tkinter.Tk()
+    root.title("Test")
+    html = markdown.markdown(read_file('README.md'))
+    html_frame = tkinterhtml.HtmlFrame(root)
+    html_frame.pack()
+    html_frame.set_content(html)
+
+    root.iconbitmap('favicon.ico')
+    root.mainloop()
+
+
 class ProcessReport:
     csv_contents = ''
     left_to_get = MAXIMUM_NECESSARY_PAYMENT
@@ -62,9 +75,6 @@ class ProcessReport:
     def open_valid_accounts_gui(self):
         messagebox.showinfo("Information", "Not yet implemented")
 
-    def open_help(self):
-        messagebox.showinfo("Information", "Not yet implemented")
-
     def launch_gui(self):
         root = tkinter.Tk()
         root.title("AMP KiwiSaver helper")
@@ -76,7 +86,7 @@ class ProcessReport:
         file_menu = tkinter.Menu(menu, tearoff=False)
         menu.add_cascade(label="File", menu=file_menu)
         file_menu.add_command(label="Set valid accounts", command=self.open_valid_accounts_gui)
-        file_menu.add_command(label="Help", command=self.open_help)
+        file_menu.add_command(label="About", command=open_about)
 
         label = ttk.Label(big_frame, text="Copy and paste the contents of the report PDF below:")
         label.pack()
