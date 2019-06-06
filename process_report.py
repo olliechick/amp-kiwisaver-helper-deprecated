@@ -51,6 +51,7 @@ def process_data(file_contents):
 class ProcessReport:
     csv_contents = ''
     left_to_get = MAXIMUM_NECESSARY_PAYMENT
+    root = None
 
     def __init__(self):
         self.html = markdown.markdown(read_file('README.md'))
@@ -71,9 +72,13 @@ class ProcessReport:
     def open_valid_accounts_gui(self):
         messagebox.showinfo("Information", "Not yet implemented")
 
-    def open_about(self, parent):
-        root = tkinter.Toplevel(parent)
-        root.transient(parent)
+        root.title("Accounts whose contributions count")
+        big_frame = ttk.Frame(root)
+        big_frame.pack(fill='both', expand=True)
+
+    def open_about(self):
+        root = tkinter.Toplevel(self.root)
+        root.transient(self.root)
         root.grab_set()
 
         root.title("About")
@@ -94,17 +99,17 @@ class ProcessReport:
         root.grab_set()
 
     def launch_gui(self):
-        root = tkinter.Tk()
-        root.title("AMP KiwiSaver helper")
-        big_frame = ttk.Frame(root)
+        self.root = tkinter.Tk()
+        self.root.title("AMP KiwiSaver helper")
+        big_frame = ttk.Frame(self.root)
         big_frame.pack(fill='both', expand=True)
 
-        menu = tkinter.Menu(root)
-        root.config(menu=menu)
+        menu = tkinter.Menu(self.root)
+        self.root.config(menu=menu)
         file_menu = tkinter.Menu(menu, tearoff=False)
         menu.add_cascade(label="File", menu=file_menu)
         file_menu.add_command(label="Set valid accounts", command=self.open_valid_accounts_gui)
-        file_menu.add_command(label="About", command=functools.partial(self.open_about, root))
+        file_menu.add_command(label="About", command=functools.partial(self.open_about, self.root))
 
         label = ttk.Label(big_frame, text="Copy and paste the contents of the report PDF below:")
         label.pack()
@@ -138,9 +143,9 @@ class ProcessReport:
 
         # Set up
 
-        root.geometry('900x500')
-        root.iconbitmap('favicon.ico')
-        root.mainloop()
+        self.root.geometry('900x500')
+        self.root.iconbitmap('favicon.ico')
+        self.root.mainloop()
 
 
 def main():
