@@ -11,7 +11,9 @@ LEFT_TO_GET_TEMPLATE = "Left to get: $"
 def read_file(filename):
     """Returns content of file"""
     file = open(filename, 'r', encoding=ENCODING)
-    return file.read()
+    content = file.read()
+    file.close()
+    return content
 
 
 def process_data(file_contents):
