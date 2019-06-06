@@ -70,6 +70,8 @@ class ProcessReport:
         print(self.new_account_name.get(), "<-")
         self.accounts_list.append(self.new_account_name.get())
         listbox.insert(tkinter.END, self.new_account_name.get())
+        self.update_calculation()
+
 
     def open_valid_accounts_gui(self):
         root = tkinter.Toplevel(self.root)
@@ -126,6 +128,11 @@ class ProcessReport:
         root.mainloop()
         root.grab_set()
 
+    def update_calculation(self, *args):
+        textbox_contents = self.textbox.get(1.0, tkinter.END)
+        self.csv_contents, self.left_to_get = process_data(textbox_contents, self.accounts_list)
+        self.left_to_get_label.config(text=LEFT_TO_GET_TEMPLATE + str('{:,.2f}'.format(self.left_to_get)))
+
     def launch_gui(self):
         self.root = tkinter.Tk()
         self.root.title("AMP KiwiSaver helper")
@@ -144,29 +151,24 @@ class ProcessReport:
 
         # Text box
 
-        def textbox_updated(*args):
-            textbox_contents = textbox.get(1.0, tkinter.END)
-            self.csv_contents, self.left_to_get = process_data(textbox_contents, self.accounts_list)
-            left_to_get_label.config(text=LEFT_TO_GET_TEMPLATE + str('{:,.2f}'.format(self.left_to_get)))
-
         text_frame = ttk.Frame(big_frame)
         text_frame.pack(fill=tkinter.BOTH, expand=True)
 
-        textbox = tkinter.Text(text_frame)
+        self.textbox = tkinter.Text(text_frame)
         scrollbar = ttk.Scrollbar(text_frame)
 
         scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
-        textbox.pack(expand=1, fill=tkinter.BOTH)
-        scrollbar.config(command=textbox.yview)
-        textbox.config(yscrollcommand=scrollbar.set)
-        textbox.bind('<KeyRelease>', textbox_updated)
+        self.textbox.pack(expand=1, fill=tkinter.BOTH)
+        scrollbar.config(command=self.textbox.yview)
+        self.textbox.config(yscrollcommand=scrollbar.set)
+        self.textbox.bind('<KeyRelease>', self.update_calculation)
 
         # Bottom bar
 
-        left_to_get_label = ttk.Label(big_frame, text=LEFT_TO_GET_TEMPLATE + str(MAXIMUM_NECESSARY_PAYMENT))
+        self.left_to_get_label = ttk.Label(big_frame, text=LEFT_TO_GET_TEMPLATE + str(MAXIMUM_NECESSARY_PAYMENT))
         save_button = ttk.Button(big_frame, text="Save CSV", command=self.save_csv)
 
-        left_to_get_label.pack(in_=big_frame, side=tkinter.LEFT, expand=1, fill=tkinter.X)
+        self.left_to_get_label.pack(in_=big_frame, side=tkinter.LEFT, expand=1, fill=tkinter.X)
         save_button.pack(in_=big_frame, side=tkinter.LEFT, expand=1, fill=tkinter.X)
 
         # Set up
