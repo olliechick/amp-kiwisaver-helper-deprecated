@@ -73,6 +73,9 @@ class ProcessReport:
         self.update_calculation()
         self.new_account_name.set('')
 
+    def delete_account(self, listbox):
+        pass
+
 
     def open_valid_accounts_gui(self):
         root = tkinter.Toplevel(self.root)
@@ -102,6 +105,9 @@ class ProcessReport:
 
         add_button = ttk.Button(edit_bar, text="Add", command=functools.partial(self.add_account, listbox))
         add_button.pack(in_=edit_bar, side=tkinter.LEFT)
+
+        delete_button = ttk.Button(edit_bar, text="Delete", command=functools.partial(self.delete_account, listbox))
+        delete_button.pack(in_=edit_bar, side=tkinter.LEFT)
 
         for item in self.accounts_list:
             listbox.insert(tkinter.END, item)
