@@ -66,7 +66,7 @@ class ProcessReport:
             f.close()
         except PermissionError:
             messagebox.showerror("Error",
-                                 "Unable to save output.csv. Maybe you have it open? If so, close it, then try again.")
+                                 "Unable to save file. Maybe you have it open? If so, close it, then try again.")
 
     def open_valid_accounts_gui(self):
         messagebox.showinfo("Information", "Not yet implemented")
