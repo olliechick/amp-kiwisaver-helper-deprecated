@@ -1,22 +1,18 @@
 #!/usr/bin/env python3
 import functools
 import tkinter
-from tkinter import ttk, messagebox, filedialog
-import markdown, tkinterhtml
 import webbrowser
+from tkinter import ttk, messagebox, filedialog
 
-ENCODING = 'utf-8'
+import markdown
+import tkinterhtml
+
+from tkinter_extensions import FancyListboxFrame
+from file_io import read_file
+
 MAXIMUM_NECESSARY_PAYMENT = 1042.86
 LEFT_TO_GET_TEMPLATE = "Left to contribute: $"
 ABOUT_URL = 'https://github.com/olliechick/amp-kiwisaver-helper/blob/master/README.md'
-
-
-def read_file(filename):
-    """Returns content of file"""
-    file = open(filename, 'r', encoding=ENCODING)
-    content = file.read()
-    file.close()
-    return content
 
 
 def process_data(file_contents):
@@ -70,11 +66,23 @@ class ProcessReport:
                                  "Unable to save file. Maybe you have it open? If so, close it, then try again.")
 
     def open_valid_accounts_gui(self):
-        messagebox.showinfo("Information", "Not yet implemented")
+        root = tkinter.Toplevel(self.root)
+        root.transient(self.root)
+        root.grab_set()
 
         root.title("Accounts whose contributions count")
         big_frame = ttk.Frame(root)
         big_frame.pack(fill='both', expand=True)
+
+        listbox = FancyListboxFrame(big_frame).listbox
+        listbox.pack()
+
+        listbox.insert(tkinter.END, "a list entry")
+
+        for item in ["one", "two", "three", "four", "four", "four", "four", "four", "four"]:
+            listbox.insert(tkinter.END, item)
+
+        root.mainloop()
 
     def open_about(self):
         root = tkinter.Toplevel(self.root)
@@ -95,7 +103,6 @@ class ProcessReport:
 
         root.iconbitmap('favicon.ico')
         root.mainloop()
-
         root.grab_set()
 
     def launch_gui(self):
@@ -109,7 +116,7 @@ class ProcessReport:
         file_menu = tkinter.Menu(menu, tearoff=False)
         menu.add_cascade(label="File", menu=file_menu)
         file_menu.add_command(label="Set valid accounts", command=self.open_valid_accounts_gui)
-        file_menu.add_command(label="About", command=functools.partial(self.open_about, self.root))
+        file_menu.add_command(label="About", command=functools.partial(self.open_about))
 
         label = ttk.Label(big_frame, text="Copy and paste the contents of the report PDF below:")
         label.pack()
