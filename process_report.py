@@ -7,7 +7,6 @@ from tkinter import ttk, messagebox, filedialog
 import markdown
 import tkinterhtml
 
-from tkinter_extensions import FancyListboxFrame
 from file_io import read_file
 
 MAXIMUM_NECESSARY_PAYMENT = 1042.86
@@ -47,6 +46,7 @@ class ProcessReport:
     csv_contents = ''
     left_to_get = MAXIMUM_NECESSARY_PAYMENT
     root = None
+    new_account_name = None
 
     def __init__(self):
         self.html = markdown.markdown(read_file('README.md'))
@@ -66,6 +66,11 @@ class ProcessReport:
             messagebox.showerror("Error",
                                  "Unable to save file. Maybe you have it open? If so, close it, then try again.")
 
+    def add_account(self, listbox):
+        print(self.new_account_name.get(), "<-")
+        self.accounts_list.append(self.new_account_name.get())
+        listbox.insert(tkinter.END, self.new_account_name.get())
+
     def open_valid_accounts_gui(self):
         root = tkinter.Toplevel(self.root)
         root.transient(self.root)
@@ -73,9 +78,12 @@ class ProcessReport:
 
         root.title("Accounts whose contributions count")
         frame = ttk.Frame(root)
-        frame.pack(fill='both', expand=True)
+        frame.pack(fill=tkinter.BOTH, expand=True)
 
-        listbox = tkinter.Listbox(frame)
+        edit_bar = ttk.Frame(frame)
+        edit_bar.pack(fill=tkinter.X, expand=True, side=tkinter.BOTTOM)
+
+        listbox = tkinter.Listbox(frame, selectmode=tkinter.SINGLE)
         listbox.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=1)
 
         scrollbar = tkinter.Scrollbar(frame, orient="vertical")
@@ -83,8 +91,14 @@ class ProcessReport:
         scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
 
         listbox.config(yscrollcommand=scrollbar.set)
-
         listbox.pack()
+
+        self.new_account_name = tkinter.StringVar(root)
+        new_account_textbox = ttk.Entry(edit_bar, textvariable=self.new_account_name)
+        new_account_textbox.pack(in_=edit_bar, side=tkinter.LEFT, expand=True, fill=tkinter.X)
+
+        add_button = ttk.Button(edit_bar, text="Add", command=functools.partial(self.add_account, listbox))
+        add_button.pack(in_=edit_bar, side=tkinter.LEFT)
 
         for item in self.accounts_list:
             listbox.insert(tkinter.END, item)
