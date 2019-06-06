@@ -10,7 +10,7 @@ LEFT_TO_GET_TEMPLATE = "Left to get: $"
 
 def read_file(filename):
     """Returns content of file"""
-    file = open(filename, 'r')
+    file = open(filename, 'r', encoding=ENCODING)
     return file.read()
 
 
