@@ -15,12 +15,11 @@ LEFT_TO_GET_TEMPLATE = "Left to contribute: $"
 ABOUT_URL = 'https://github.com/olliechick/amp-kiwisaver-helper/blob/master/README.md'
 
 
-def process_data(file_contents):
+def process_data(file_contents, accounts):
     """Returns:
      - the contents of a CSV file of contributions that count
      - the amount left until you have given MAXIMUM_NECESSARY_PAYMENT"""
     items = ''.join(file_contents.split("Effective date Description Account Amount Units")[1:]).split()
-    accounts = read_file('accounts.txt').split('\n')
 
     output_csv = 'Account,Amount\n'
     total = 0
@@ -51,6 +50,7 @@ class ProcessReport:
 
     def __init__(self):
         self.html = markdown.markdown(read_file('README.md'))
+        self.accounts_list = read_file('config/accounts.txt').split('\n')
 
     def save_csv(self):
         try:
@@ -125,7 +125,7 @@ class ProcessReport:
 
         def textbox_updated(*args):
             textbox_contents = textbox.get(1.0, tkinter.END)
-            self.csv_contents, self.left_to_get = process_data(textbox_contents)
+            self.csv_contents, self.left_to_get = process_data(textbox_contents, self.accounts_list)
             left_to_get_label.config(text=LEFT_TO_GET_TEMPLATE + str('{:,.2f}'.format(self.left_to_get)))
 
         text_frame = ttk.Frame(big_frame)
