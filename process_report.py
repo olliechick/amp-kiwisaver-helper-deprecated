@@ -48,6 +48,12 @@ def process_data(file_contents):
 def open_about():
     root = tkinter.Tk()
     root.title("About")
+    big_frame = ttk.Frame(root)
+    big_frame.pack(fill='both', expand=True)
+
+    save_button = ttk.Button(big_frame, text="Open in web browser")
+    save_button.pack(in_=big_frame, side=tkinter.LEFT)
+
     html = markdown.markdown(read_file('README.md'))
     html_frame = tkinterhtml.HtmlFrame(root)
     html_frame.pack()
