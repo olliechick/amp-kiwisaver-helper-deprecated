@@ -50,7 +50,8 @@ class ProcessReport:
 
     def __init__(self):
         self.html = markdown.markdown(read_file('README.md'))
-        self.accounts_list = read_file('config/accounts.txt').split('\n')
+        accounts = read_file('config/accounts.txt').split('\n')
+        self.accounts_list = [account for account in accounts if account.strip() != '']
 
     def save_csv(self):
         try:
@@ -71,11 +72,18 @@ class ProcessReport:
         root.grab_set()
 
         root.title("Accounts whose contributions count")
-        big_frame = ttk.Frame(root)
-        big_frame.pack(fill='both', expand=True)
+        frame = ttk.Frame(root)
+        frame.pack(fill='both', expand=True)
 
-        listbox_frame = FancyListboxFrame(big_frame)
-        listbox = listbox_frame.listbox
+        listbox = tkinter.Listbox(frame)
+        listbox.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=1)
+
+        scrollbar = tkinter.Scrollbar(frame, orient="vertical")
+        scrollbar.config(command=listbox.yview)
+        scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+
+        listbox.config(yscrollcommand=scrollbar.set)
+
         listbox.pack()
 
         for item in self.accounts_list:
