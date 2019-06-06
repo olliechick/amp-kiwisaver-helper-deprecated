@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
+import functools
 import tkinter
 from tkinter import ttk, messagebox, filedialog
 import markdown, tkinterhtml
+import webbrowser
 
 ENCODING = 'utf-8'
 MAXIMUM_NECESSARY_PAYMENT = 1042.86
 LEFT_TO_GET_TEMPLATE = "Left to contribute: $"
+ABOUT_URL = 'https://github.com/olliechick/amp-kiwisaver-helper/blob/master/README.md'
 
 
 def read_file(filename):
@@ -51,7 +54,8 @@ def open_about():
     big_frame = ttk.Frame(root)
     big_frame.pack(fill='both', expand=True)
 
-    save_button = ttk.Button(big_frame, text="Open in web browser")
+    save_button = ttk.Button(big_frame, text="Open in web browser",
+                             command=functools.partial(webbrowser.open, ABOUT_URL))
     save_button.pack(in_=big_frame, side=tkinter.LEFT)
 
     html = markdown.markdown(read_file('README.md'))
