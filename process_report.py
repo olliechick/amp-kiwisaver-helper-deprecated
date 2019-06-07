@@ -85,6 +85,16 @@ class ProcessReport:
 
     def add_account(self, listbox):
         new_account_name = self.new_account_name.get()
+        if len(new_account_name.split()) < 2:
+            messagebox.showerror("Error", "Account type must be exactly two words. "
+                                          "If it is only one word, use the last word of the description "
+                                          "and the account type.")
+            return
+        elif len(new_account_name.split()) > 2:
+            new_account_name = ' '.join(new_account_name.split()[-2:])
+            messagebox.showwarning("Warning", "Account type must be exactly two words. "
+                                              "As such, only the last two words ({}) will be added."
+                                   .format(new_account_name))
 
         self.accounts_list.append(new_account_name)
         listbox.insert(tkinter.END, new_account_name)
