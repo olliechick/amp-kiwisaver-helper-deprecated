@@ -72,10 +72,13 @@ class ProcessReport:
         write_file(CONFIG_ACCOUNTS_FILE, self.accounts_list)
 
     def add_account(self, listbox):
-        self.accounts_list.append(self.new_account_name.get())
-        listbox.insert(tkinter.END, self.new_account_name.get())
-        self.update_calculation()
+        new_account_name = self.new_account_name.get()
+
+        self.accounts_list.append(new_account_name)
+        listbox.insert(tkinter.END, new_account_name)
         self.new_account_name.set('')
+
+        self.update_calculation()
         self.save_accounts_list()
 
     def delete_account(self, listbox):
@@ -83,6 +86,8 @@ class ProcessReport:
 
         self.accounts_list.pop(i)
         listbox.delete(i)
+
+        self.update_calculation()
         self.save_accounts_list()
 
 
