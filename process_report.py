@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import ast
 import functools
 import tkinter
 import webbrowser
@@ -7,11 +8,12 @@ from tkinter import ttk, messagebox, filedialog
 import markdown
 import tkinterhtml
 
-from file_io import read_file
+from file_io import read_file, write_file
 
 MAXIMUM_NECESSARY_PAYMENT = 1042.86
 LEFT_TO_GET_TEMPLATE = "Left to contribute: $"
 ABOUT_URL = 'https://github.com/olliechick/amp-kiwisaver-helper/blob/master/README.md'
+CONFIG_ACCOUNTS_FILE = 'config/accounts.txt'
 
 
 def process_data(file_contents, accounts):
@@ -50,7 +52,7 @@ class ProcessReport:
 
     def __init__(self):
         self.html = markdown.markdown(read_file('README.md'))
-        accounts = read_file('config/accounts.txt').split('\n')
+        accounts = ast.literal_eval(read_file(CONFIG_ACCOUNTS_FILE))
         self.accounts_list = [account for account in accounts if account.strip() != '']
 
     def save_csv(self):
@@ -66,15 +68,22 @@ class ProcessReport:
             messagebox.showerror("Error",
                                  "Unable to save file. Maybe you have it open? If so, close it, then try again.")
 
+    def save_accounts_list(self):
+        write_file(CONFIG_ACCOUNTS_FILE, self.accounts_list)
+
     def add_account(self, listbox):
-        print(self.new_account_name.get(), "<-")
         self.accounts_list.append(self.new_account_name.get())
         listbox.insert(tkinter.END, self.new_account_name.get())
         self.update_calculation()
         self.new_account_name.set('')
+        self.save_accounts_list()
 
     def delete_account(self, listbox):
-        pass
+        i = listbox.curselection()[0]
+
+        self.accounts_list.pop(i)
+        listbox.delete(i)
+        self.save_accounts_list()
 
 
     def open_valid_accounts_gui(self):

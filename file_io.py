@@ -7,3 +7,10 @@ def read_file(filename):
     content = file.read()
     file.close()
     return content
+
+
+def write_file(filename, content):
+    """Writes content to file"""
+    file = open(filename, 'w', encoding=ENCODING)
+    file.write(str(content))
+    file.close()
