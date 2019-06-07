@@ -20,7 +20,7 @@ I created this Python GUI tool that does this for you, based on the text in the 
 
 1. Generate a report on the AMP website for the date range 1 July
 (either last year or this year, whichever was closest, but still in the past) until today.
-See "Generating a report" below for more detailed instructions.
+See [Generating a report](#Generating-a-report) below for more detailed instructions.
 
 2. Run this app (`./process-report.py`).
 
