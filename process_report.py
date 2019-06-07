@@ -14,6 +14,7 @@ MAXIMUM_NECESSARY_PAYMENT = 1042.86
 LEFT_TO_GET_TEMPLATE = "Left to contribute: $"
 ABOUT_URL = 'https://github.com/olliechick/amp-kiwisaver-helper/blob/master/README.md'
 CONFIG_ACCOUNTS_FILE = 'config/accounts.txt'
+CONFIG_DEFAULT_ACCOUNTS_FILE = 'config/default_accounts.txt'
 
 
 def process_data(file_contents, accounts):
@@ -86,6 +87,13 @@ class ProcessReport:
 
         self.accounts_list.pop(i)
         listbox.delete(i)
+
+        self.update_calculation()
+        self.save_accounts_list()
+
+    def reset_valid_accounts(self):
+        default_accounts = ast.literal_eval(read_file(CONFIG_DEFAULT_ACCOUNTS_FILE))
+        self.accounts_list = default_accounts
 
         self.update_calculation()
         self.save_accounts_list()
@@ -165,7 +173,8 @@ class ProcessReport:
         file_menu = tkinter.Menu(menu, tearoff=False)
         menu.add_cascade(label="File", menu=file_menu)
         file_menu.add_command(label="Set valid accounts", command=self.open_valid_accounts_gui)
-        file_menu.add_command(label="About", command=functools.partial(self.open_about))
+        file_menu.add_command(label="Reset valid accounts to default", command=self.reset_valid_accounts)
+        file_menu.add_command(label="About", command=self.open_about)
 
         label = ttk.Label(big_frame, text="Copy and paste the contents of the report PDF below:")
         label.pack()
