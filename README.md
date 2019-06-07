@@ -28,11 +28,24 @@ I created this Python GUI tool that does this for you, based on the text in the 
 3. That's it! You will now see how much you still need to contribute (in the bottom left),
 and you can export the contributions that count to a CSV.
 
-## Notes
+### Configuring which types of contributions count
 
-Which contributions count depend on what is in `accounts.txt`. Currently there is just the type of contributions I
-made that count, but if you made others, you will have to add them (note: only add the last two words of the "Account"
-column from the PDF, in the "Investment transaction details" section).
+Only some contributions count towards the $1,042.86.
+For me, that is `Member Contribution`s and `Direct Debits and Additional Contributions`.
+However, if you made others (which you can double check by emailing [kiwisaver@amp.co.nz](mailto:kiwisaver@amp.co.nz)),
+you will have to add them. You can do this with the following steps:
+
+1. Click File
+2. Click Set valid accounts - a second window will open
+3. Enter the *last two words* of the account type
+(under the "Account" column from the PDF, in the "Investment transaction details" section)
+into the textbox in the bottom-right of the second window
+4. Click Add
+5. The amount left to contribute will automatically update; you can now close the second window
+
+You can also delete them by clicking on the account type and clicking Delete.
+
+To reset them to the default, click File, then Reset valid accounts to default.
 
 If you have any questions or find any errors, feel free to
 submit a [PR](https://github.com/olliechick/amp-kiwisaver-helper/pulls) or
