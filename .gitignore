@@ -1,5 +1,6 @@
 # specific to this project
 *.csv
+config/accounts.txt
 
 #JetBrains
 .idea/

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import ast
 import functools
+import os
 import tkinter
 import webbrowser
 from tkinter import ttk, messagebox, filedialog
@@ -45,6 +46,16 @@ def process_data(file_contents, accounts):
     return output_csv, left_to_give
 
 
+def get_accounts_from_file():
+    if os.path.isfile(CONFIG_ACCOUNTS_FILE):
+        file_content = read_file(CONFIG_ACCOUNTS_FILE)
+    else:
+        file_content = read_file(CONFIG_DEFAULT_ACCOUNTS_FILE)
+        write_file(CONFIG_ACCOUNTS_FILE, file_content)
+
+    return ast.literal_eval(file_content)
+
+
 class ProcessReport:
     csv_contents = ''
     left_to_get = MAXIMUM_NECESSARY_PAYMENT
@@ -53,7 +64,7 @@ class ProcessReport:
 
     def __init__(self):
         self.html = markdown.markdown(read_file('README.md'))
-        accounts = ast.literal_eval(read_file(CONFIG_ACCOUNTS_FILE))
+        accounts = get_accounts_from_file()
         self.accounts_list = [account for account in accounts if account.strip() != '']
 
     def save_csv(self):
@@ -97,7 +108,6 @@ class ProcessReport:
 
         self.update_calculation()
         self.save_accounts_list()
-
 
     def open_valid_accounts_gui(self):
         root = tkinter.Toplevel(self.root)
