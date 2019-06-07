@@ -20,6 +20,7 @@ I created this Python GUI tool that does this for you, based on the text in the 
 
 1. Generate a report on the AMP website for the date range 1 July
 (either last year or this year, whichever was closest, but still in the past) until today.
+See "Generating a report" below for more detailed instructions.
 
 2. Run this app (`./process-report.py`).
 
@@ -46,6 +47,21 @@ into the textbox in the bottom-right of the second window
 You can also delete them by clicking on the account type and clicking Delete.
 
 To reset them to the default, click File, then Reset valid accounts to default.
+
+### Generating a report
+This is accurate as of the time of writing, 7 May 2019.
+1. Log in to My AMP
+2. Click Reports (on the left)
+3. Under "Select product", select your KiwiSaver scheme (for me, this is AMP KiwiSaver Scheme - KXXXXXXX)
+4. Under "Details by date range", select Custom date range
+5. Under Date From, select 1 July (this year if it's in the past, or last year if not)
+4. Under Date To, select today's date
+5. Click the "Generate Report" button
+6. A report will appear in the "Your reports" section
+7. Click the document icon in the View column
+8. Save the report PDF somewhere (e.g. Desktop)
+
+## Contact
 
 If you have any questions or find any errors, feel free to
 submit a [PR](https://github.com/olliechick/amp-kiwisaver-helper/pulls) or
