@@ -12,7 +12,8 @@ import tkinterhtml
 from file_io import read_file, write_file
 
 MAXIMUM_NECESSARY_PAYMENT = 1042.86
-LEFT_TO_GET_TEMPLATE = "Left to contribute: $"
+CONTRIB_SO_FAR_TEMPLATE = "Contributed so far: $"
+LEFT_TO_GET_TEMPLATE = ". Left to contribute: $"
 ABOUT_URL = 'https://github.com/olliechick/amp-kiwisaver-helper/blob/master/README.md'
 CONFIG_ACCOUNTS_FILE = 'config/accounts.txt'
 CONFIG_DEFAULT_ACCOUNTS_FILE = 'config/default_accounts.txt'
@@ -180,7 +181,9 @@ class ProcessReport:
     def update_calculation(self, *args):
         textbox_contents = self.textbox.get(1.0, tkinter.END)
         self.csv_contents, self.left_to_get = process_data(textbox_contents, self.accounts_list)
-        self.left_to_get_label.config(text=LEFT_TO_GET_TEMPLATE + str('{:,.2f}'.format(self.left_to_get)))
+        total_so_far = MAXIMUM_NECESSARY_PAYMENT - self.left_to_get
+        self.left_to_get_label.config(text=CONTRIB_SO_FAR_TEMPLATE + str('{:,.2f}'.format(total_so_far))
+                                           + LEFT_TO_GET_TEMPLATE + str('{:,.2f}'.format(self.left_to_get)))
 
     def launch_gui(self):
         self.root = tkinter.Tk()
@@ -215,7 +218,8 @@ class ProcessReport:
 
         # Bottom bar
 
-        self.left_to_get_label = ttk.Label(big_frame, text=LEFT_TO_GET_TEMPLATE + str(MAXIMUM_NECESSARY_PAYMENT))
+        self.left_to_get_label = ttk.Label(big_frame, text=CONTRIB_SO_FAR_TEMPLATE + str('{:,.2f}'.format(0))
+                                                           + LEFT_TO_GET_TEMPLATE + str(MAXIMUM_NECESSARY_PAYMENT))
         save_button = ttk.Button(big_frame, text="Save CSV", command=self.save_csv)
 
         self.left_to_get_label.pack(in_=big_frame, side=tkinter.LEFT, expand=1, fill=tkinter.X)
