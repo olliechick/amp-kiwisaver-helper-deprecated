@@ -21,11 +21,8 @@ I created this Python GUI tool that does this for you, based on the text in the 
 1. Generate a report on the AMP website for the date range 1 July
 (either last year or this year, whichever was closest, but still in the past) until today.
 See [Generating a report](#Generating-a-report) below for more detailed instructions.
-
 2. Run this app (`./process-report.py`).
-
 2. Open the report PDF, select all (Ctrl+A), then copy it and paste it into this app.
-
 3. That's it! You will now see how much you still need to contribute (in the bottom left),
 and you can export the contributions that count to a CSV.
 
@@ -50,6 +47,7 @@ To reset them to the default, click File, then Reset valid accounts to default.
 
 ### Generating a report
 This is accurate as of the time of writing, 7 May 2019.
+
 1. Log in to My AMP
 2. Click Reports (on the left)
 3. Under "Select product", select your KiwiSaver scheme (for me, this is AMP KiwiSaver Scheme - KXXXXXXX)
